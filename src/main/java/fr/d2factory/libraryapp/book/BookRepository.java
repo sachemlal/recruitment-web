@@ -9,24 +9,38 @@ import java.util.Map;
  * The book repository emulates a database via 2 HashMaps
  */
 public class BookRepository {
+
     private Map<ISBN, Book> availableBooks = new HashMap<>();
     private Map<Book, LocalDate> borrowedBooks = new HashMap<>();
 
     public void addBooks(List<Book> books){
-        //TODO implement the missing feature
+        for (Book book : books) {
+           this.addBook(book);
+        }
+    }
+
+    public void addBook(Book book){
+        availableBooks.put(book.getIsbn(), book);
     }
 
     public Book findBook(long isbnCode) {
-        //TODO implement the missing feature
-        return null;
+        return availableBooks.get(new ISBN(isbnCode));
     }
 
     public void saveBookBorrow(Book book, LocalDate borrowedAt){
-        //TODO implement the missing feature
+        availableBooks.remove(book.getIsbn());
+        borrowedBooks.put(book, borrowedAt);
     }
 
     public LocalDate findBorrowedBookDate(Book book) {
-        //TODO implement the missing feature
-        return null;
+        return borrowedBooks.get(book);
+    }
+
+    public Map<ISBN, Book> getAvailableBooks() {
+        return availableBooks;
+    }
+
+    public Map<Book, LocalDate> getBorrowedBooks() {
+        return borrowedBooks;
     }
 }
