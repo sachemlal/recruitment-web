@@ -139,7 +139,7 @@ public class LibraryTest {
         assertEquals((long) 2, (long) member.getWallet());
     }
 
-    @Test
+    @Test(expected = HasLateBooksException.class)
     public void members_cannot_borrow_book_if_they_have_late_books(){
         Member member = new Student("student", "1", 10, 2);
         long isbnTest = 3326456467846L;
@@ -150,14 +150,9 @@ public class LibraryTest {
         assertTrue(((LibraryImpl)this.library).checkIfLateMember(member));
 
         assertEquals((long) 1, (long) member.getBorrowedBooks().size());
-        try {
-            // trying a second borrow which must throw an exception because the member is late
-            this.library.borrowBook(isbnTest2, member, LocalDate.now());
-        } catch (HasLateBooksException e) {
-            e.printStackTrace();
-        }
 
-        assertEquals((long) 1, (long) member.getBorrowedBooks().size());
+        // trying a second borrow which must throw an exception because the member is late
+        this.library.borrowBook(isbnTest2, member, LocalDate.now());
     }
 
     @Test
