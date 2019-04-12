@@ -14,15 +14,16 @@ public class LibraryImpl implements Library
 
     public BookRepository bookRepository;
 
-    private long calculateNbrOfDays(Book book) {
+    private long calculateBorrowPeriod(Book book) {
         LocalDate borrowDate = this.getBookRepository().findBorrowedBookDate(book);
         LocalDate now = LocalDate.now();
+
         return Duration.between(borrowDate.atStartOfDay(), now.atStartOfDay()).toDays();
     }
 
     public boolean checkIfLateMember(Member member) {
         for (Book book : member.getBorrowedBooks()) {
-            long nbrDays = this.calculateNbrOfDays(book);
+            long nbrDays = this.calculateBorrowPeriod(book);
             if(nbrDays > member.getMaxPeriod()) {
                 return true;
             }
@@ -44,12 +45,13 @@ public class LibraryImpl implements Library
                 }
             }
         }
+
         return null;
     }
 
     @Override
     public void returnBook(Book book, Member member) {
-        long numberOfDays = this.calculateNbrOfDays(book);
+        long numberOfDays = this.calculateBorrowPeriod(book);
         member.payBook(numberOfDays);
         member.getBorrowedBooks().remove(book);
         this.getBookRepository().getBorrowedBooks().remove(book);

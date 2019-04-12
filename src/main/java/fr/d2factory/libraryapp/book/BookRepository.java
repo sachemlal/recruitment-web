@@ -13,12 +13,6 @@ public class BookRepository {
     private Map<ISBN, Book> availableBooks = new HashMap<>();
     private Map<Book, LocalDate> borrowedBooks = new HashMap<>();
 
-    public void addBooks(List<Book> books){
-        for (Book book : books) {
-           this.addBook(book);
-        }
-    }
-
     public void addBook(Book book){
         availableBooks.put(book.getIsbn(), book);
     }

@@ -2,6 +2,9 @@ package fr.d2factory.libraryapp.member;
 
 public class Student extends Member {
 
+    /**
+     * Level of study for a student
+     */
     int yearOfStudy;
     static final int firstYearFreePeriod = 15;
     static final int maxPeriod = 30;

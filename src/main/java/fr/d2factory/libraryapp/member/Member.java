@@ -14,14 +14,35 @@ public abstract class Member {
 
     String firstName;
     String lastName;
+
+    /**
+     * Period of time for free renting
+     */
     int freePeriod = 0;
+
+    /**
+     * Maximum borrow period in days, for example a student has a maximum period of 30 day
+     */
     int maxPeriod;
+
+    /**
+     * Rent price for normal period
+     */
     private float rentPricePerDay;
+
+    /**
+     * Rent price for late period
+     */
     private float rentPricePerLateDay;
+
     /**
      * An initial sum of money the member has
      */
     private float wallet;
+
+    /**
+     * List of borrowed books for a member
+     */
     private Set<Book> borrowedBooks = new HashSet<Book>();
 
     public Member(String firstName, String lastName, float wallet) {
